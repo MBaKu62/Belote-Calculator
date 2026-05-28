@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Belote 1001 – Complet</title>
-    <style>
+    <    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <meta name="theme-color" content="#011120">style>
+        
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
         body { background: #0b1120; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
         .app { background: #111827; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); padding: 24px 20px; width: 100%; max-width: 850px; color: #e5e7eb; }
@@ -465,4 +468,9 @@
     updateGlobalDisplay();
 </script>
 </body>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
 </html>
