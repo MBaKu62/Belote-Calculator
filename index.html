@@ -466,5 +466,14 @@
     renderAnnonces('nous'); renderAnnonces('eux');
     updateTotals();
     updateGlobalDisplay();
+
+// ========== SERVICE WORKER ==========
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/Belote-Calculator/service-worker.js')
+            .then(reg => console.log('SW enregistre:', reg.scope))
+            .catch(err => console.log('SW erreur:', err));
+    });
+}
 </script>
 </html>
