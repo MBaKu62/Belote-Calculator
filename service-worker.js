@@ -1,32 +1,11 @@
-const CACHE_NAME = 'belote-calc-v2';
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json'
-];
-
-self.addEventListener('install', (event) => {
+// Service worker disabled - clearing all caches
+self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS);
-    })
+    caches.keys().then(names => Promise.all(names.map(name => caches.delete(name))))
   );
+  return self.clients.claim();
 });
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
-    })
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((names) => {
-      return Promise.all(
-        names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
-      );
-    })
-  );
+self.addEventListener('fetch', event => {
+  // No caching, passthrough only
 });
