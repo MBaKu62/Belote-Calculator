@@ -1,7 +1,8 @@
 {
   "name": "Belote Calculator",
   "short_name": "BeloteCalc",
-  "start_url": "/",
+  "start_url": "/Belote-Calculator/index.html",
+  "scope": "/Belote-Calculator/",
   "display": "standalone",
   "background_color": "#0b1120",
   "theme_color": "#059669",
