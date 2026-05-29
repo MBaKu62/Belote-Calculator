@@ -2,478 +2,719 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belote 1001 – Complet</title>
-     <link rel="manifest" href="manifest.json">
-     <link rel="apple-touch-icon" href="icon-180.png">
-    <meta name="theme-color" content="#011120"><style>
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
-        body { background: #0b1120; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .app { background: #111827; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.8); padding: 24px 20px; width: 100%; max-width: 850px; color: #e5e7eb; }
-        h1 { text-align: center; font-size: 2.2rem; margin-bottom: 20px; color: #34d399; letter-spacing: 2px; font-weight: 800; text-shadow: 0 0 12px rgba(52,211,153,0.6); }
-        .page { display: none; } .page.active { display: block; }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Belote 1001 – Moderne</title>
+
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-180.png">
+    <meta name="theme-color" content="#059669">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(ellipse at 50% 50%, #1a2332 0%, #0b0f14 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow-y: auto;
+        }
+
+        .app {
+            background: rgba(20, 25, 35, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 36px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            padding: 25px 18px;
+            width: 100%;
+            max-width: 450px;
+            color: #eef2f5;
+            margin: 10px;
+            max-height: 95vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #4ade80;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(74,222,128,0.4);
+        }
+        .page { display: none; }
+        .page.active { display: block; }
 
         /* Accueil */
-        .equipe-manager { background: #1f2937; border-radius: 16px; padding: 18px; margin-bottom: 20px; border: 1px solid #374151; }
-        .equipe-manager h3 { color: #6ee7b7; margin-bottom: 12px; }
-        .equipe-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; min-height: 30px; }
-        .equipe-tag { background: #374151; padding: 6px 14px; border-radius: 20px; display: flex; align-items: center; gap: 8px; font-weight: bold; }
-        .equipe-tag button { background: #b91c1c; border: none; color: white; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .equipe-manager {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(12px);
+        }
+        .equipe-manager h3 { color: #a3e635; margin-bottom: 10px; font-size: 1rem; }
+        .equipe-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .equipe-tag {
+            background: rgba(255,255,255,0.08);
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+        }
+        .equipe-tag button {
+            background: #ef4444;
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .input-row { display: flex; gap: 10px; margin-top: 12px; }
-        .input-row input { flex: 1; background: #0f172a; border: 1px solid #4b5563; color: #fbbf24; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
-        .selection-row { display: flex; gap: 20px; align-items: center; justify-content: center; margin: 20px 0; }
-        select { background: #0f172a; border: 1px solid #4b5563; color: #fbbf24; padding: 8px 12px; border-radius: 8px; font-weight: bold; }
-        .partie-en-cours { background: #1f2937; border-radius: 12px; padding: 12px; margin: 12px 0; border: 1px solid #374151; text-align: center; display: none; }
+        .input-row input {
+            flex: 1;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 12px;
+            color: white;
+            font-weight: 500;
+            outline: none;
+        }
+        .selection-row { display: flex; gap: 12px; justify-content: center; margin: 20px 0; }
+        select {
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 14px;
+            padding: 12px;
+            color: white;
+            font-weight: 500;
+            backdrop-filter: blur(8px);
+        }
+        .partie-en-cours {
+            background: rgba(255,255,255,0.05);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 12px 0;
+            text-align: center;
+            display: none;
+            font-size: 0.9rem;
+        }
 
-        /* Jeu (conservé à l'identique) */
-        .scoreboard { display: flex; justify-content: space-around; background: #1f2937; border-radius: 18px; padding: 16px; margin-bottom: 24px; border: 1px solid #374151; }
-        .team-score { text-align: center; background: #111827; border-radius: 14px; padding: 12px 20px; min-width: 130px; }
-        .team-score .team-name { font-size: 1.1rem; color: #9ca3af; margin-bottom: 4px; }
-        .team-score .score-value { font-size: 2rem; font-weight: 800; color: #fbbf24; }
-        .victory-banner { background: #d97706; color: #0b1120; text-align: center; font-weight: 900; font-size: 1.5rem; padding: 12px; border-radius: 16px; margin-bottom: 20px; display: none; box-shadow: 0 0 20px #f59e0b; }
-        .row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
-        .team-panel { flex: 1 1 300px; background: #1f2937; border-radius: 20px; padding: 18px; border: 1px solid #374151; }
-        .team-panel h2 { font-size: 1.4rem; color: #6ee7b7; margin-bottom: 14px; text-align: center; border-bottom: 2px dashed #4b5563; padding-bottom: 8px; }
-        .input-group { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .input-group label { flex: 1; color: #d1d5db; font-weight: 500; }
-        .input-group input[type="number"] { width: 80px; padding: 10px; border-radius: 10px; border: 1px solid #4b5563; background: #0f172a; color: #fbbf24; font-weight: bold; text-align: center; font-size: 1rem; }
-        .checkbox-group { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #d1d5db; font-weight: 500; }
-        .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: #34d399; }
-        .announcements { background: #111827; border-radius: 12px; padding: 12px; border: 1px solid #374151; margin-top: 16px; }
-        .announcements-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .announcements-header span { font-weight: 700; color: #9ca3af; }
-        .btn-add { background: #059669; border: none; color: white; padding: 6px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
-        .btn-add:hover { background: #047857; }
-        .announce-item { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; background: #1f2937; padding: 8px 10px; border-radius: 8px; flex-wrap: wrap; }
-        .announce-item select { background: #0f172a; border: 1px solid #4b5563; color: #fbbf24; padding: 6px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
-        .announce-item .points { color: #fcd34d; font-weight: bold; min-width: 50px; text-align: center; }
-        .btn-remove { background: #b91c1c; border: none; color: white; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-left: auto; }
-        .team-total { text-align: center; font-size: 1.8rem; font-weight: 800; background: #0f172a; color: #fbbf24; border-radius: 12px; padding: 8px; margin-top: 16px; border: 1pxsolid #374151; }
-        .note { font-size: 0.8rem; color: #6b7280; text-align: center; margin-top: 4px; }
-        .manche-section { background: #1f2937; border-radius: 16px; padding: 18px; margin-top: 20px; border: 1px solid #374151; }
-        .manche-section h3 { font-size: 1.3rem; color: #6ee7b7; margin-bottom: 12px; text-align: center; }
-        .preneur-row { display: flex; gap: 15px; align-items: center; justify-content: center; margin-bottom: 12px; }
-        .radio-group { display: flex; gap: 10px; background: #0f172a; padding: 5px; border-radius: 30px; }
-        .radio-group label { padding: 8px 18px; border-radius: 25px; font-weight: bold; cursor: pointer; color: #9ca3af; transition: 0.2s; }
-        .radio-group input[type="radio"] { display: none; }
-        .radio-group input[type="radio"]:checked + span { background: #2563eb; color: white; box-shadow: 0 0 10px #3b82f6; border-radius: 25px; padding: 8px 18px; }
-        .result-box { text-align: center; background: #0f172a; border-radius: 12px; padding: 12px; margin: 12px 0; color: #fcd34d; font-weight: bold; border: 1px solid #374151; }
-        .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 20px; }
-        .btn { padding: 12px 20px; border-radius: 30px; font-weight: bold; border: none; font-size: 1rem; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 8px rgba(0,0,0,0.4); }
-        .btn-primary { background: #059669; color: white; } .btn-primary:hover { background: #047857; }
-        .btn-secondary { background: #4b5563; color: #e5e7eb; } .btn-secondary:hover { background: #374151; }
-        .btn-danger { background: #b91c1c; color: white; } .btn-danger:hover { background: #991b1b; }
-        button:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+        .btn {
+            padding: 14px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin: 6px 0;
+            backdrop-filter: blur(12px);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-primary { background: #22c55e; color: #0f172a; border: none; }
+        .btn-primary:hover { background: #16a34a; }
+        .btn-secondary { background: rgba(255,255,255,0.08); }
+        .btn-danger { background: rgba(239,68,68,0.9); }
+        .btn-warning { background: rgba(245,158,11,0.9); }
+        .btn-purple { background: rgba(139,92,246,0.9); }
+
+        /* Jeu */
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .team-score {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 15px 10px;
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .team-score.selected {
+            border-color: #fbbf24;
+            background: rgba(251,191,36,0.15);
+        }
+        .team-score .team-name { font-size: 0.9rem; opacity: 0.8; }
+        .team-score .score-value { font-size: 2rem; font-weight: 700; color: #facc15; }
+
+        .team-panel {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 15px;
+        }
+        .team-panel h2 { font-size: 1.2rem; color: #86efac; margin-bottom: 12px; text-align: center; }
+        .input-group { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .input-group label { font-size: 0.9rem; opacity: 0.9; }
+        .input-group input[type="number"] {
+            width: 80px;
+            padding: 12px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        .input-group input::placeholder { color: #6b7280; }
+
+        .annonces {
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 12px;
+            margin-top: 10px;
+        }
+        .annonces-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .btn-add {
+            background: #22c55e;
+            border: none;
+            color: #0f172a;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .announce-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.06);
+            padding: 8px;
+            border-radius: 12px;
+            flex-wrap: wrap;
+        }
+        .announce-item select {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            padding: 6px;
+            border-radius: 8px;
+        }
+        .announce-item .points { color: #fcd34d; font-weight: bold; }
+        .btn-remove { background: #ef4444; border: none; color: white; padding: 4px 10px; border-radius: 8px; }
+
+        .team-total {
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: rgba(0,0,0,0.3);
+            border-radius: 14px;
+            padding: 10px;
+            margin-top: 10px;
+            color: #facc15;
+        }
+
+        .manche-section {
+            background: rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 16px;
+            margin-top: 10px;
+        }
+        .result-box {
+            text-align: center;
+            background: rgba(0,0,0,0.3);
+            padding: 12px;
+            border-radius: 12px;
+            margin: 12px 0;
+            font-weight: bold;
+            color: #fcd34d;
+        }
+        .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+        .actions .btn { flex: 1; padding: 12px 6px; font-size: 0.8rem; }
 
         /* Modal */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
         .modal.active { display: flex; }
-        .modal-content { background: #1f2937; padding: 24px; border-radius: 20px; width: 90%; max-width: 700px; max-height: 80vh; overflow-y: auto; color: #e5e7eb; border: 1px solid #374151; }
-        .modal-content h2 { color: #34d399; margin-bottom: 16px; }
-        .partie-item { background: #111827; border-radius: 12px; padding: 12px; margin-bottom: 12px; border: 1px solid #374151; }
-        .partie-item .date { color: #fbbf24; font-weight: bold; }
-        .manche-detail { font-size: 0.9rem; margin-left: 16px; color: #9ca3af; }
-        .close-btn { float: right; background: #b91c1c; border: none; color: white; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .modal-content {
+            background: rgba(20,25,35,0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 24px;
+            width: 90%;
+            max-width: 380px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        .modal-content h2 { color: #4ade80; margin-bottom: 16px; }
+        .close-btn {
+            background: #ef4444;
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            float: right;
+        }
     </style>
 </head>
 <body>
 <div class="app">
-    <!-- PAGE ACCUEIL -->
     <div id="home-page" class="page active">
         <h1>♠️ BELOTE ♥️</h1>
         <div class="equipe-manager">
             <h3>👥 Équipes</h3>
             <div class="equipe-list" id="equipe-list"></div>
             <div class="input-row">
-                <input type="text" id="new-equipe-input" placeholder="Nouvelle équipe..." onkeydown="if(event.key==='Enter') addEquipeFromInput()">
-                <button class="btn btn-primary" onclick="addEquipeFromInput()">➕ Ajouter</button>
+                <input type="text" id="new-equipe-input" placeholder="Nouvelle équipe...">
+                <button class="btn btn-primary" onclick="addEquipeFromInput()" style="width:auto; padding:12px 24px;">➕</button>
             </div>
         </div>
         <div class="selection-row">
             <select id="select-equipe1" onchange="checkPartie()"></select>
-            <span style="color:#9ca3af; font-weight:bold;">VS</span>
+            <span style="color:#a3e635;">⚡</span>
             <select id="select-equipe2" onchange="checkPartie()"></select>
         </div>
-        <div style="text-align:center; margin:10px 0;">
-            <button class="btn btn-primary" onclick="startGame(false)">▶️ Commencer</button>
-        </div>
+        <button class="btn btn-primary" onclick="startGame(false)">▶️ Commencer</button>
         <div id="partie-en-cours-info" class="partie-en-cours"></div>
-        <div style="text-align:center; margin-top:15px;">
-            <button class="btn btn-secondary" onclick="openHistory()">📋 Historique</button>
-        </div>
+        <button class="btn btn-secondary" onclick="openHistory()">📋 Historique</button>
     </div>
 
-    <!-- PAGE JEU (conservée à l'identique) -->
     <div id="game-page" class="page">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <button class="btn btn-secondary" onclick="goHome()" style="padding:8px 16px;">🏠 Accueil</button>
-            <h2 style="margin:0; color:#6ee7b7;">Manche en cours</h2>
+        <div class="top-bar">
+            <button class="btn btn-secondary" onclick="goHome()" style="width:auto; padding:8px 16px;">🏠</button>
+            <h2 style="margin:0; color:#86efac; font-size:1.1rem;">Manche</h2>
             <div></div>
         </div>
+
         <div class="scoreboard">
-            <div class="team-score">
+            <div class="team-score" id="team-score-nous" onclick="selectPreneur('nous')">
                 <div class="team-name" id="label-nous">Nous</div>
                 <div class="score-value" id="global-nous">0</div>
-                <div class="team-name">/ 1001</div>
             </div>
-            <div class="team-score">
+            <div class="team-score" id="team-score-eux" onclick="selectPreneur('eux')">
                 <div class="team-name" id="label-eux">Eux</div>
                 <div class="score-value" id="global-eux">0</div>
-                <div class="team-name">/ 1001</div>
             </div>
         </div>
-        <div id="victory-banner" class="victory-banner"></div>
-        <div class="row">
-            <div class="team-panel">
-                <h2 id="titre-nous">Nous</h2>
-                <div class="input-group"><label>Points de plis</label><input type="number" id="plis-nous" value="0" min="0" max="162" step="1" oninput="syncPlis('nous', this.value)"></div>
-                <div class="checkbox-group"><label><input type="checkbox" id="belote-nous" onchange="updateTotals()"> Belote / Rebelote (20)</label></div>
-                <div class="announcements">
-                    <div class="announcements-header"><span>📢 Annonces</span><button class="btn-add" onclick="ajouterAnnonce('nous')">+ Ajouter</button></div>
-                    <div id="annonces-nous-container"></div>
-                </div>
-                <div class="team-total" id="total-nous">0</div>
-                <div class="note">Total plis = 162</div>
+
+        <div class="team-panel">
+            <h2 id="titre-nous">Nous</h2>
+            <div class="input-group"><label>Plis</label><input type="number" id="plis-nous" placeholder="0" min="0" max="162" oninput="syncPlis('nous', this.value)"></div>
+            <div class="annonces">
+                <div class="annonces-header"><span>📢 Annonces</span><button class="btn-add" onclick="ajouterAnnonce('nous')">+</button></div>
+                <div id="annonces-nous-container"></div>
             </div>
-            <div class="team-panel">
-                <h2 id="titre-eux">Eux</h2>
-                <div class="input-group"><label>Points de plis</label><input type="number" id="plis-eux" value="0" min="0" max="162" step="1" oninput="syncPlis('eux', this.value)"></div>
-                <div class="checkbox-group"><label><input type="checkbox" id="belote-eux" onchange="updateTotals()"> Belote / Rebelote (20)</label></div>
-                <div class="announcements">
-                    <div class="announcements-header"><span>📢 Annonces</span><button class="btn-add" onclick="ajouterAnnonce('eux')">+ Ajouter</button></div>
-                    <div id="annonces-eux-container"></div>
-                </div>
-                <div class="team-total" id="total-eux">0</div>
-                <div class="note">Total plis = 162</div>
-            </div>
+            <div class="team-total" id="total-nous">0</div>
         </div>
+
+        <div class="team-panel">
+            <h2 id="titre-eux">Eux</h2>
+            <div class="input-group"><label>Plis</label><input type="number" id="plis-eux" placeholder="0" min="0" max="162" oninput="syncPlis('eux', this.value)"></div>
+            <div class="annonces">
+                <div class="annonces-header"><span>📢 Annonces</span><button class="btn-add" onclick="ajouterAnnonce('eux')">+</button></div>
+                <div id="annonces-eux-container"></div>
+            </div>
+            <div class="team-total" id="total-eux">0</div>
+        </div>
+
         <div class="manche-section">
-            <h3>⚔️ Manche</h3>
-            <div class="preneur-row">
-                <span style="color:#d1d5db; font-weight:500;">Preneur :</span>
-                <div class="radio-group" id="preneur-group">
-                    <label><input type="radio" name="preneur" value="nous" checked><span id="preneur-label-nous">Nous</span></label>
-                    <label><input type="radio" name="preneur" value="eux"><span id="preneur-label-eux">Eux</span></label>
-                </div>
-            </div>
-            <button class="btn btn-primary" onclick="calcAndUpdateManche()" style="display:block; margin:0 auto;">Calculer la manche</button>
+            <button class="btn btn-primary" onclick="calcAndUpdateManche()">Calculer la manche</button>
             <div class="result-box" id="result-manche">---</div>
-            <div id="report-info" style="text-align:center; color:#f59e0b; margin-bottom:8px;"></div>
+            <div id="report-info" style="text-align:center; color:#facc15; font-size:0.9rem;"></div>
             <div class="actions">
-                <button class="btn btn-secondary" onclick="resetDonne()">🔄 Nouvelle donne</button>
-                <button class="btn btn-danger" onclick="newGame()">🆕 Nouvelle partie</button>
+                <button class="btn btn-warning" onclick="annulerDerniereManche()">↩️</button>
+                <button class="btn btn-purple" onclick="openFausseDonne()">🚫</button>
+                <button class="btn btn-secondary" onclick="resetDonne()">🔄</button>
+                <button class="btn btn-danger" onclick="newGame()">🆕</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL HISTORIQUE -->
 <div class="modal" id="history-modal" onclick="if(event.target===this) closeHistory()">
+    <div class="modal-content" style="text-align:left;">
+        <button class="close-btn" onclick="closeHistory()">✕</button>
+        <h2>📜 Historique</h2>
+        <div id="history-list" style="max-height:60vh; overflow-y:auto;"></div>
+    </div>
+</div>
+<div class="modal" id="fausse-donne-modal">
     <div class="modal-content">
-        <button class="close-btn" onclick="closeHistory()">✕ Fermer</button>
-        <h2>📜 Historique des parties</h2>
-        <div id="history-list"></div>
+        <h2>🚫 Fausse donne</h2>
+        <p style="margin-bottom:20px;">Qui a fait la fausse donne ?</p>
+        <button class="btn btn-primary" id="btn-fausse-nous"></button>
+        <button class="btn btn-primary" id="btn-fausse-eux"></button>
+        <button class="btn btn-secondary" onclick="closeFausseDonne()" style="margin-top:12px;">Annuler</button>
     </div>
 </div>
 
 <script>
-    // ========== STOCKAGE ==========
-    const STORAGE_OK = (() => { try { localStorage.setItem('test','test'); localStorage.removeItem('test'); return true; } catch(e) { return false; } })();
-    const mem = {};
-    function load(k, d) { if (STORAGE_OK) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : d; } catch(e) { return d; } } else return mem[k] !== undefined ? mem[k] : d; }
-    function save(k, v) { if (STORAGE_OK) { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) { mem[k] = v; } } else mem[k] = v; }
-    function remove(k) { if (STORAGE_OK) localStorage.removeItem(k); else delete mem[k]; }
+    (() => {
+        // Storage
+        const STORAGE_OK = (() => { try { localStorage.setItem('t','t'); localStorage.removeItem('t'); return true; } catch(e) { return false; } })();
+        const mem = {};
+        const load = (k,d) => { if(STORAGE_OK){ try{ const r=localStorage.getItem(k); return r?JSON.parse(r):d; }catch(e){return d;} } else return mem[k]!==undefined?mem[k]:d; };
+        const save = (k,v) => { if(STORAGE_OK){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){mem[k]=v;} } else mem[k]=v; };
+        const remove = k => { if(STORAGE_OK) localStorage.removeItem(k); else delete mem[k]; };
 
-    const EQ_KEY = 'belote_equipes', PART_KEY = 'belote_partie', HIST_KEY = 'belote_hist';
-    let gameData = null, nom1 = 'Nous', nom2 = 'Eux';
-    const VICTORY = 1001;
-    let globalNous = 0, globalEux = 0, gameOver = false, reportEnAttente = 0;
+        const EQ='belote_equipes', PART='belote_partie', HIST='belote_hist';
+        let gameData=null, nom1='Nous', nom2='Eux', globalNous=0, globalEux=0, gameOver=false, reportEnAttente=0;
+        let derniereManche = null;
+        let selectedPreneur = null;
+        const VICTORY=1001;
+        const ANNOUNCE_TYPES = { 'Belote':20, 'Tierce':20, 'Cinquante':50, 'Cent':100, 'Carré':null };
+        const CARRE_VALUES = { Valet:200, Dame:100, Roi:100, As:100, '10':100, '9':150 };
+        const annoncesNous=[], annoncesEux=[];
 
-    const ANNOUNCE_TYPES = { 'Tierce':20,'Cinquante':50, 'Cent':100, 'Carré':null };
-    const CARRE_VALUES = { 'Valet':200, 'Dame':100, 'Roi':100, 'As':100, '10':100, '9':150 };
-    const annoncesNous = [], annoncesEux = [];
+        const el=id=>document.getElementById(id);
+        const showPage=id=>{
+            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+            el(id).classList.add('active');
+        };
 
-    function el(id) { return document.getElementById(id); }
+        window.selectPreneur = (equipe) => {
+            if (gameOver) return;
+            selectedPreneur = equipe;
+            el('team-score-nous').classList.remove('selected');
+            el('team-score-eux').classList.remove('selected');
+            if (equipe === 'nous') el('team-score-nous').classList.add('selected');
+            else el('team-score-eux').classList.add('selected');
+        };
 
-    // ========== NAVIGATION ==========
-    function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        el(id).classList.add('active');
-    }
-
-    // ========== ÉQUIPES ==========
-    function addEquipeFromInput() {
-        const input = el('new-equipe-input'); const nom = input.value.trim();
-        if (!nom) { alert('Entrez un nom'); return; }
-        let equipes = load(EQ_KEY, []);
-        if (equipes.includes(nom)) { alert('Existe déjà'); return; }
-        equipes.push(nom); save(EQ_KEY, equipes);
-        input.value = ''; input.focus(); renderEquipes();
-    }
-    function deleteEquipe(nom) {
-        let equipes = load(EQ_KEY, []).filter(e => e !== nom);
-        save(EQ_KEY, equipes); renderEquipes();
-    }
-    function renderEquipes() {
-        const list = el('equipe-list'); if (!list) return;
-        list.innerHTML = '';
-        load(EQ_KEY, []).forEach(n => {
-            const span = document.createElement('span'); span.className = 'equipe-tag';
-            span.innerHTML = n + ' <button onclick="deleteEquipe(\'' + n.replace(/'/g, "\\'") + '\')">×</button>';
-            list.appendChild(span);
-        });
-        [el('select-equipe1'), el('select-equipe2')].forEach(sel => {
-            if (!sel) return; const cur = sel.value;
-            sel.innerHTML = '<option value="">-- Choisir --</option>';
-            load(EQ_KEY, []).forEach(n => sel.appendChild(new Option(n, n)));
-            sel.value = load(EQ_KEY, []).includes(cur) ? cur : '';
-        });
-        checkPartie();
-    }
-
-    function checkPartie() {
-        const p = load(PART_KEY, null); const info = el('partie-en-cours-info');
-        if (!info) return;
-        info.innerHTML = ''; info.style.display = 'none';
-        if (!p) return;
-        const e1 = el('select-equipe1')?.value, e2 = el('select-equipe2')?.value;
-        if (e1 && e2 && p.nous === e1 && p.eux === e2) {
-            info.style.display = 'block';
-            info.innerHTML = `⚠️ Partie en cours <strong>${e1}</strong> vs <strong>${e2}</strong> (${p.scoreNous} - ${p.scoreEux})<br>`;
-            const btnR = document.createElement('button'); btnR.className = 'btn btn-primary'; btnR.textContent = 'Reprendre';
-            btnR.onclick = () => startGame(true);
-            const btnN = document.createElement('button'); btnN.className = 'btn btn-secondary'; btnN.textContent = 'Nouvelle';
-            btnN.onclick = () => { remove(PART_KEY); checkPartie(); };
-            info.appendChild(btnR); info.appendChild(btnN);
+        window.addEquipeFromInput=()=>{
+            const input=el('new-equipe-input'); const nom=input.value.trim();
+            if(!nom){ alert('Nom requis'); return; }
+            let eq=load(EQ,[]);
+            if(eq.includes(nom)){ alert('Existe déjà'); return; }
+            eq.push(nom); save(EQ,eq); input.value=''; renderEquipes();
+        };
+        window.deleteEquipe=n=>{
+            let eq=load(EQ,[]).filter(e=>e!==n); save(EQ,eq); renderEquipes();
+        };
+        function renderEquipes(){
+            const list=el('equipe-list'); if(!list) return;
+            list.innerHTML='';
+            load(EQ,[]).forEach(n=>{
+                const span=document.createElement('span'); span.className='equipe-tag';
+                span.innerHTML=n+' <button onclick="deleteEquipe(\''+n.replace(/'/g,"\\'")+'\')">×</button>';
+                list.appendChild(span);
+            });
+            [el('select-equipe1'), el('select-equipe2')].forEach(sel=>{
+                if(!sel) return; const cur=sel.value;
+                sel.innerHTML='<option value="">--</option>';
+                load(EQ,[]).forEach(n=>sel.appendChild(new Option(n,n)));
+                sel.value=load(EQ,[]).includes(cur)?cur:'';
+            });
+            checkPartie();
         }
-    }
-
-    // ========== JEU ==========
-    function startGame(resume) {
-        const e1 = el('select-equipe1')?.value, e2 = el('select-equipe2')?.value;
-        if (!e1 || !e2) { alert('Choisissez deux équipes'); return; }
-        if (e1 === e2) { alert('Équipes différentes'); return; }
-        nom1 = e1; nom2 = e2;
-        if (resume) {
-            const saved = load(PART_KEY, null);
-            if (!saved || saved.nous !== e1 || saved.eux !== e2) { alert('Aucune partie'); return; }
-            gameData = saved; globalNous = saved.scoreNous; globalEux = saved.scoreEux;
-            gameOver = saved.over; reportEnAttente = saved.report || 0;
-        } else {
-            remove(PART_KEY);
-            globalNous = 0; globalEux = 0; gameOver = false; reportEnAttente = 0;
-            gameData = { nous: e1, eux: e2, scoreNous:0, scoreEux:0, report:0, manches:[], over:false };
-            save(PART_KEY, gameData);
-        }
-        // Mettre à jour les noms dans l'interface
-        ['label-nous','label-eux','titre-nous','titre-eux','preneur-label-nous','preneur-label-eux'].forEach((id,i) => {
-            const e = el(id); if (e) e.textContent = i%2===0 ? nom1 : nom2;
-        });
-        showPage('game-page');
-        resetDonne();
-        updateGlobalDisplay();
-    }
-
-    function goHome() {
-        if (gameData && !gameOver) {
-            gameData.scoreNous = globalNous; gameData.scoreEux = globalEux;
-            gameData.report = reportEnAttente; gameData.over = gameOver;
-            save(PART_KEY, gameData);
-        }
-        showPage('home-page');
-        renderEquipes();
-    }
-
-    function updateGlobalDisplay() {
-        el('global-nous').textContent = globalNous;
-        el('global-eux').textContent = globalEux;
-        const banner = el('victory-banner');
-        if (gameOver) {
-            banner.textContent = `🏆 Victoire de ${globalNous >= VICTORY ? nom1 : nom2} ! 🏆`;
-            banner.style.display = 'block';
-        } else {
-            banner.style.display = 'none';
-        }
-        el('report-info').textContent = reportEnAttente > 0 ? `📥 Report en attente : ${reportEnAttente} pts` : '';
-    }
-
-    // Synchronisation des plis
-    let syncing = false;
-    function syncPlis(source, value) {
-        if (syncing) return;
-        syncing = true;
-        const val = Math.min(162, Math.max(0, parseInt(value) || 0));
-        const pn = el('plis-nous'), pe = el('plis-eux');
-        if (source === 'nous') { pn.value = val; pe.value = 162 - val; }
-        else { pe.value = val; pn.value = 162 - val; }
-        syncing = false;
-        updateTotals();
-    }
-
-    function getPointsAnnonce(a) { return a.type === 'Carré' ? (CARRE_VALUES[a.hauteur] || 0) : (ANNOUNCE_TYPES[a.type] || 0); }
-    function sommeAnnonces(arr) { return arr.reduce((s, a) => s + getPointsAnnonce(a), 0); }
-    function computeTeamTotal(plisVal, equipe) {
-        let total = plisVal;
-        if (el('belote-' + equipe).checked) total += 20;
-        total += sommeAnnonces(equipe === 'nous' ? annoncesNous : annoncesEux);
-        return total;
-    }
-    function updateTotals() {
-        if (gameOver) return;
-        const pNous = parseInt(el('plis-nous').value) || 0, pEux = parseInt(el('plis-eux').value) || 0;
-        el('total-nous').textContent = computeTeamTotal(pNous, 'nous');
-        el('total-eux').textContent = computeTeamTotal(pEux, 'eux');
-    }
-    function renderAnnonces(equipe) {
-        const cont = document.getElementById('annonces-' + equipe + '-container');
-        const arr = equipe === 'nous' ? annoncesNous : annoncesEux;
-        cont.innerHTML = '';
-        arr.forEach((a, idx) => {
-            const div = document.createElement('div'); div.className = 'announce-item';
-            const selT = document.createElement('select');
-            Object.keys(ANNOUNCE_TYPES).forEach(t => selT.appendChild(new Option(t, t, t === a.type, t === a.type)));
-            const selH = document.createElement('select');
-            Object.keys(CARRE_VALUES).forEach(h => selH.appendChild(new Option(h, h, h === a.hauteur, h === a.hauteur)));
-            selH.style.display = a.type === 'Carré' ? '' : 'none';
-            const ptsSpan = document.createElement('span'); ptsSpan.className = 'points'; ptsSpan.textContent = getPointsAnnonce(a) + ' pts';
-            const btnDel = document.createElement('button'); btnDel.className = 'btn-remove'; btnDel.textContent = '✕';
-            btnDel.onclick = () => { arr.splice(idx, 1); renderAnnonces(equipe); updateTotals(); };
-            selT.onchange = () => { a.type = selT.value; if (a.type === 'Carré') a.hauteur = selH.value; else a.hauteur = null; renderAnnonces(equipe); updateTotals(); };
-            selH.onchange = () => { a.hauteur = selH.value; renderAnnonces(equipe); updateTotals(); };
-            div.appendChild(selT); div.appendChild(selH); div.appendChild(ptsSpan); div.appendChild(btnDel);
-            cont.appendChild(div);
-        });
-    }
-    function ajouterAnnonce(equipe) {
-        const arr = equipe === 'nous' ? annoncesNous : annoncesEux;
-        arr.push({ type: 'Tierce', hauteur: null });
-        renderAnnonces(equipe); updateTotals();
-    }
-
-    function getPreneur() {
-        const checked = document.querySelector('input[name="preneur"]:checked');
-        return checked ? checked.value : 'nous';
-    }
-
-    function calcAndUpdateManche() {
-        if (gameOver) return;
-        const preneur = getPreneur();
-        const plisNousVal = parseInt(el('plis-nous').value) || 0, plisEuxVal = parseInt(el('plis-eux').value) || 0;
-        const tNous = computeTeamTotal(plisNousVal, 'nous'), tEux = computeTeamTotal(plisEuxVal, 'eux');
-        const attaquantTotal = preneur === 'nous' ? tNous : tEux, defenseurTotal = preneur === 'nous' ? tEux : tNous;
-        const attaquantPlis = preneur === 'nous' ? plisNousVal : plisEuxVal;
-        let pointsNous = 0, pointsEux = 0, newReport = 0, message = '';
-
-        if (attaquantPlis === 162) {
-            const bonusCapot = 100;
-            if (preneur === 'nous') { pointsNous = tNous + bonusCapot; pointsEux = 0; }
-            else { pointsEux = tEux + bonusCapot; pointsNous = 0; }
-            message = `✅ Capot ! Bonus +${bonusCapot} pour le preneur.`;
-        } else if (attaquantTotal <= defenseurTotal) {
-            const totalManche = tNous + tEux;
-            if (attaquantTotal < defenseurTotal) {
-                if (preneur === 'nous') { pointsNous = 0; pointsEux = totalManche; }
-                else { pointsEux = 0; pointsNous = totalManche; }
-                message = `❌ Dedans (attaquant a moins).`;
-            } else {
-                const moitie = Math.floor(totalManche / 2);
-                newReport = totalManche - moitie;
-                if (preneur === 'nous') { pointsNous = 0; pointsEux = moitie; }
-                else { pointsEux = 0; pointsNous = moitie; }
-                message = `⚖️ Égalité ! Défenseur prend ${moitie} pts, ${newReport} pts en report.`;
+        window.checkPartie=()=>{
+            const p=load(PART,null); const info=el('partie-en-cours-info');
+            if(!info) return;
+            info.innerHTML=''; info.style.display='none';
+            if(!p) return;
+            const e1=el('select-equipe1')?.value, e2=el('select-equipe2')?.value;
+            if(e1&&e2&&p.nous===e1&&p.eux===e2){
+                info.style.display='block';
+                info.innerHTML=`⚠️ Partie en cours ${e1} vs ${e2} (${p.scoreNous}-${p.scoreEux})<br>`;
+                const b1=document.createElement('button'); b1.className='btn btn-primary'; b1.textContent='Reprendre'; b1.onclick=()=>startGame(true);
+                const b2=document.createElement('button'); b2.className='btn btn-secondary'; b2.textContent='Nouvelle'; b2.onclick=()=>{ remove(PART); checkPartie(); };
+                info.appendChild(b1); info.appendChild(b2);
             }
-        } else {
-            pointsNous = tNous; pointsEux = tEux;
-            message = `✅ Attaquant devant.`;
-        }
+        };
 
-        if (reportEnAttente > 0) {
-            if (pointsNous > pointsEux) { pointsNous += reportEnAttente; message += `<br>📥 Report ${reportEnAttente} pts → ${nom1}`; }
-            else if (pointsEux > pointsNous) { pointsEux += reportEnAttente; message += `<br>📥 Report ${reportEnAttente} pts → ${nom2}`; }
-            else { newReport += reportEnAttente; message += `<br>⚠️ Report conservé.`; }
-        }
-
-        globalNous += pointsNous; globalEux += pointsEux;
-        reportEnAttente = newReport;
-        updateGlobalDisplay();
-        el('result-manche').innerHTML = `${message}<br>${nom1} : ${pointsNous} pts | ${nom2} : ${pointsEux} pts`;
-
-        if (gameData) {
-            gameData.scoreNous = globalNous; gameData.scoreEux = globalEux;
-            gameData.report = reportEnAttente; gameData.manches.push({ preneur: preneur === 'nous' ? nom1 : nom2, pointsNous, pointsEux, resultat: message });
-        }
-
-        if (globalNous >= VICTORY || globalEux >= VICTORY) {
-            gameOver = true;
-            if (gameData) { gameData.over = true; save(PART_KEY, gameData); }
-            // Sauvegarder dans l'historique
-            const hist = load(HIST_KEY, []);
-            hist.push({ date: Date.now(), equipes: { nous: nom1, eux: nom2 }, scoreNous: globalNous, scoreEux: globalEux, manches: gameData ? gameData.manches : [] });
-            save(HIST_KEY, hist);
-            remove(PART_KEY);
+        function startGame(resume){
+            const e1=el('select-equipe1')?.value, e2=el('select-equipe2')?.value;
+            if(!e1||!e2){ alert('Choisissez les équipes'); return; }
+            if(e1===e2){ alert('Équipes différentes'); return; }
+            nom1=e1; nom2=e2;
+            if(resume){
+                const saved=load(PART,null);
+                if(!saved||saved.nous!==e1||saved.eux!==e2){ alert('Aucune partie'); return; }
+                gameData=saved; globalNous=saved.scoreNous; globalEux=saved.scoreEux; gameOver=saved.over; reportEnAttente=saved.report||0;
+            }else{
+                remove(PART);
+                globalNous=0; globalEux=0; gameOver=false; reportEnAttente=0;
+                gameData={nous:e1, eux:e2, scoreNous:0, scoreEux:0, report:0, manches:[], over:false};
+                save(PART,gameData);
+            }
+            ['label-nous','label-eux','titre-nous','titre-eux'].forEach((id,i)=>{
+                const e=el(id); if(e) e.textContent=i%2===0?nom1:nom2;
+            });
+            showPage('game-page');
+            resetDonne();
             updateGlobalDisplay();
-        } else {
-            if (gameData) save(PART_KEY, gameData);
+            derniereManche = null;
+            selectedPreneur=null;
+            el('team-score-nous').classList.remove('selected');
+            el('team-score-eux').classList.remove('selected');
+        }
+        window.startGame=startGame;
+
+        window.goHome=()=>{
+            if(gameData&&!gameOver){ gameData.scoreNous=globalNous; gameData.scoreEux=globalEux; gameData.report=reportEnAttente; save(PART,gameData); }
+            showPage('home-page'); renderEquipes();
+        };
+
+        function updateGlobalDisplay(){
+            el('global-nous').textContent=globalNous; el('global-eux').textContent=globalEux;
+            el('report-info').textContent=reportEnAttente>0?`📥 Report: ${reportEnAttente} pts`:'';
+            if(gameOver){
+                const winner = globalNous>=VICTORY?nom1:nom2;
+                el('result-manche').innerHTML = `🏆 ${winner} gagne !`;
+            }
+        }
+
+        let syncing=false;
+        window.syncPlis=(src,val)=>{
+            if(syncing) return; syncing=true;
+            const v=Math.min(162,Math.max(0,parseInt(val)||0));
+            if(src==='nous'){ el('plis-nous').value=v; el('plis-eux').value=162-v; }
+            else{ el('plis-eux').value=v; el('plis-nous').value=162-v; }
+            syncing=false; updateTotals();
+        };
+
+        function getPoints(a){ return a.type==='Carré'?(CARRE_VALUES[a.hauteur]||0):(ANNOUNCE_TYPES[a.type]||0); }
+        function sommeAnnonces(arr){ return arr.reduce((s,a)=>s+getPoints(a),0); }
+        function compute(plis,equipe){
+            return plis + sommeAnnonces(equipe==='nous'?annoncesNous:annoncesEux);
+        }
+        function updateTotals(){
+            if(gameOver) return;
+            const pn=parseInt(el('plis-nous').value)||0, pe=parseInt(el('plis-eux').value)||0;
+            el('total-nous').textContent=compute(pn,'nous'); el('total-eux').textContent=compute(pe,'eux');
+        }
+        window.updateTotals=updateTotals;
+
+        function renderAnnonces(equipe){
+            const cont=el('annonces-'+equipe+'-container'); if(!cont) return;
+            const arr=equipe==='nous'?annoncesNous:annoncesEux;
+            cont.innerHTML='';
+            arr.forEach((a,i)=>{
+                const div=document.createElement('div'); div.className='announce-item';
+                const selT=document.createElement('select');
+                Object.keys(ANNOUNCE_TYPES).forEach(t=>selT.appendChild(new Option(t,t,t===a.type,t===a.type)));
+                const selH=document.createElement('select');
+                Object.keys(CARRE_VALUES).forEach(h=>selH.appendChild(new Option(h,h,h===a.hauteur,h===a.hauteur)));
+                selH.style.display=a.type==='Carré'?'':'none';
+                const span=document.createElement('span'); span.className='points'; span.textContent=getPoints(a)+' pts';
+                const btn=document.createElement('button'); btn.className='btn-remove'; btn.textContent='✕';
+                btn.onclick=()=>{ arr.splice(i,1); renderAnnonces(equipe); updateTotals(); };
+                selT.onchange=()=>{ a.type=selT.value; if(a.type==='Carré') a.hauteur=selH.value; else a.hauteur=null; renderAnnonces(equipe); updateTotals(); };
+                selH.onchange=()=>{ a.hauteur=selH.value; renderAnnonces(equipe); updateTotals(); };
+                div.appendChild(selT); div.appendChild(selH); div.appendChild(span); div.appendChild(btn);
+                cont.appendChild(div);
+            });
+        }
+        window.ajouterAnnonce=equipe=>{
+            const arr=equipe==='nous'?annoncesNous:annoncesEux;
+            arr.push({type:'Belote',hauteur:null}); renderAnnonces(equipe); updateTotals();
+        };
+
+        window.calcAndUpdateManche=()=>{
+            if(gameOver) return;
+            if(!selectedPreneur){ alert('Cliquez sur l\'équipe qui a pris (score en haut).'); return; }
+            const preneur = selectedPreneur;
+            const pn=parseInt(el('plis-nous').value)||0, pe=parseInt(el('plis-eux').value)||0;
+            const tn=compute(pn,'nous'), te=compute(pe,'eux');
+            const attTotal=preneur==='nous'?tn:te, defTotal=preneur==='nous'?te:tn;
+            const attPlis=preneur==='nous'?pn:pe;
+            let ptsN=0, ptsE=0, rep=0, msg='';
+
+            derniereManche = {
+                scoreNous: globalNous,
+                scoreEux: globalEux,
+                report: reportEnAttente,
+                preneur: preneur,
+                manches: gameData ? gameData.manches.slice() : []
+            };
+
+            if(attPlis===162){
+                if(preneur==='nous'){ ptsN=tn+100; ptsE=0; } else { ptsE=te+100; ptsN=0; }
+                msg='✅ Capot (+100)';
+            }else if(attTotal<=defTotal){
+                const tot=tn+te;
+                if(attTotal<defTotal){
+                    if(preneur==='nous'){ ptsN=0; ptsE=tot; } else { ptsE=0; ptsN=tot; }
+                    msg='❌ Dedans';
+                }else{
+                    const moitie=Math.floor(tot/2); rep=tot-moitie;
+                    if(preneur==='nous'){ ptsN=0; ptsE=moitie; } else { ptsE=0; ptsN=moitie; }
+                    msg=`⚖️ Égalité (${moitie} pts, report ${rep})`;
+                }
+            }else{ ptsN=tn; ptsE=te; msg='✅ Gagné'; }
+
+            if(reportEnAttente>0){
+                if(ptsN>ptsE){ ptsN+=reportEnAttente; msg+=` +report ${reportEnAttente}`; }
+                else if(ptsE>ptsN){ ptsE+=reportEnAttente; msg+=` +report ${reportEnAttente}`; }
+                else rep+=reportEnAttente;
+            }
+
+            globalNous+=ptsN; globalEux+=ptsE; reportEnAttente=rep;
+            updateGlobalDisplay();
+            el('result-manche').innerHTML=`${msg}<br>${nom1}: ${ptsN} pts | ${nom2}: ${ptsE} pts`;
+
+            if(gameData){
+                gameData.scoreNous=globalNous; gameData.scoreEux=globalEux; gameData.report=reportEnAttente;
+                gameData.manches.push({preneur:preneur==='nous'?nom1:nom2, ptsN, ptsE, msg});
+            }
+            if(globalNous>=VICTORY||globalEux>=VICTORY){
+                gameOver=true; if(gameData){ gameData.over=true; save(PART,gameData); }
+                const hist=load(HIST,[]); hist.push({date:Date.now(), equipes:{nous:nom1, eux:nom2}, scoreNous:globalNous, scoreEux:globalEux, manches:gameData.manches});
+                save(HIST,hist); remove(PART);
+                updateGlobalDisplay();
+            }else{ if(gameData) save(PART,gameData); resetDonne(); }
+        };
+
+        window.annulerDerniereManche=()=>{
+            if (!derniereManche) {
+                alert('Aucune manche à annuler.');
+                return;
+            }
+            if (gameOver) {
+                alert('Partie terminée, impossible d\'annuler.');
+                return;
+            }
+            if (!confirm('Annuler la dernière manche ? Les scores seront restaurés.')) return;
+
+            globalNous = derniereManche.scoreNous;
+            globalEux = derniereManche.scoreEux;
+            reportEnAttente = derniereManche.report;
+            if (gameData) {
+                gameData.scoreNous = globalNous;
+                gameData.scoreEux = globalEux;
+                gameData.report = reportEnAttente;
+                if (derniereManche.manches && gameData.manches.length > 0) {
+                    gameData.manches = derniereManche.manches.slice();
+                }
+                save(PART, gameData);
+            }
+            updateGlobalDisplay();
+            el('result-manche').innerHTML = '🔄 Manche annulée';
+            resetDonne();
+            derniereManche = null;
+        };
+
+        window.openFausseDonne=()=>{
+            el('btn-fausse-nous').textContent=nom1; el('btn-fausse-eux').textContent=nom2;
+            el('btn-fausse-nous').onclick=()=>{ appliquerFausseDonne('nous'); };
+            el('btn-fausse-eux').onclick=()=>{ appliquerFausseDonne('eux'); };
+            el('fausse-donne-modal').classList.add('active');
+        };
+        window.closeFausseDonne=()=> el('fausse-donne-modal').classList.remove('active');
+        function appliquerFausseDonne(fautif){
+            if(gameOver) return;
+            derniereManche = {
+                scoreNous: globalNous,
+                scoreEux: globalEux,
+                report: reportEnAttente,
+                preneur: selectedPreneur,
+                manches: gameData ? gameData.manches.slice() : []
+            };
+            if(fautif==='nous'){
+                globalEux+=162;
+                el('result-manche').innerHTML=`🚫 Fausse donne par ${nom1}<br>${nom2} prend 162 pts`;
+            }else{
+                globalNous+=162;
+                el('result-manche').innerHTML=`🚫 Fausse donne par ${nom2}<br>${nom1} prend 162 pts`;
+            }
+            updateGlobalDisplay();
+            if(gameData){ gameData.scoreNous=globalNous; gameData.scoreEux=globalEux; save(PART,gameData); }
+            if(globalNous>=VICTORY||globalEux>=VICTORY){
+                gameOver=true; if(gameData){ gameData.over=true; save(PART,gameData); }
+                const hist=load(HIST,[]); hist.push({date:Date.now(), equipes:{nous:nom1, eux:nom2}, scoreNous:globalNous, scoreEux:globalEux, manches:gameData.manches});
+                save(HIST,hist); remove(PART);
+            }
+            closeFausseDonne();
             resetDonne();
         }
-    }
 
-    function resetDonne() {
-        if (gameOver) return;
-        el('plis-nous').value = 0; el('plis-eux').value = 0;
-        el('belote-nous').checked = false; el('belote-eux').checked = false;
-        annoncesNous.length = 0; annoncesEux.length = 0;
-        document.querySelector('input[name="preneur"][value="nous"]').checked = true;
+        window.resetDonne=()=>{
+            if(gameOver) return;
+            el('plis-nous').value=''; el('plis-eux').value='';
+            annoncesNous.length=0; annoncesEux.length=0;
+            selectedPreneur=null;
+            el('team-score-nous').classList.remove('selected');
+            el('team-score-eux').classList.remove('selected');
+            renderAnnonces('nous'); renderAnnonces('eux'); updateTotals();
+            el('result-manche').textContent='---';
+        };
+        window.newGame=()=>{
+            if(gameData&&!gameOver){ gameData.scoreNous=globalNous; gameData.scoreEux=globalEux; gameData.over=true; save(PART,gameData);
+                const hist=load(HIST,[]); hist.push({date:Date.now(), equipes:{nous:nom1, eux:nom2}, scoreNous:globalNous, scoreEux:globalEux, manches:gameData.manches});
+                save(HIST,hist); }
+            remove(PART); globalNous=0; globalEux=0; gameOver=false; reportEnAttente=0; updateGlobalDisplay(); resetDonne(); derniereManche=null;
+        };
+
+        window.openHistory=()=>{
+            const hist=load(HIST,[]); const list=el('history-list'); if(!list) return;
+            list.innerHTML=hist.length===0?'<p style="color:#9ca3af;">Aucune partie</p>':'';
+            hist.slice().reverse().forEach(p=>{
+                const d=new Date(p.date).toLocaleString();
+                let manches='';
+                if(p.manches) p.manches.forEach((m,i)=> manches+=`<div>M${i+1}: ${m.preneur} → ${m.ptsN}-${m.ptsE}</div>`);
+                const div=document.createElement('div'); div.style.marginBottom='10px';
+                div.innerHTML=`📅 ${d}<br><strong>${p.equipes.nous}</strong> ${p.scoreNous} - ${p.scoreEux} <strong>${p.equipes.eux}</strong>${manches}`;
+                list.appendChild(div);
+            });
+            el('history-modal').classList.add('active');
+        };
+        window.closeHistory=()=> el('history-modal').classList.remove('active');
+
+        // INIT
+        renderEquipes();
         renderAnnonces('nous'); renderAnnonces('eux');
-        updateTotals();
-        el('result-manche').textContent = '---';
-    }
+        updateTotals(); updateGlobalDisplay();
 
-    function newGame() {
-        if (gameData && !gameOver) {
-            gameData.scoreNous = globalNous; gameData.scoreEux = globalEux;
-            gameData.over = true; save(PART_KEY, gameData);
-            const hist = load(HIST_KEY, []);
-            hist.push({ date: Date.now(), equipes: { nous: nom1, eux: nom2 }, scoreNous: globalNous, scoreEux: globalEux, manches: gameData.manches });
-            save(HIST_KEY, hist);
+        // ========== SERVICE WORKER PWA ==========
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/Belote-Calculator/service-worker.js')
+                    .then(reg => console.log('✅ Service Worker enregistré:', reg.scope))
+                    .catch(err => console.log('❌ Erreur Service Worker:', err));
+            });
         }
-        remove(PART_KEY);
-        globalNous = 0; globalEux = 0; gameOver = false; reportEnAttente = 0;
-        updateGlobalDisplay();
-        resetDonne();
-    }
-
-    // ========== HISTORIQUE ==========
-    function openHistory() {
-        const hist = load(HIST_KEY, []);
-        const list = el('history-list'); if (!list) return;
-        list.innerHTML = hist.length === 0 ? '<p style="color:#9ca3af;">Aucune partie</p>' : '';
-        hist.slice().reverse().forEach(p => {
-            const d = new Date(p.date).toLocaleString();
-            let manches = '';
-            if (p.manches) p.manches.forEach((m, i) => manches += `<div class="manche-detail">M${i + 1}: ${m.preneur} → ${m.pointsNous} - ${m.pointsEux}</div>`);
-            const div = document.createElement('div'); div.className = 'partie-item';
-            div.innerHTML = `<div class="date">📅 ${d}</div><div><strong>${p.equipes.nous}</strong> ${p.scoreNous} - ${p.scoreEux} <strong>${p.equipes.eux}</strong></div>${manches}`;
-            list.appendChild(div);
-        });
-        el('history-modal').classList.add('active');
-    }
-    function closeHistory() { el('history-modal').classList.remove('active'); }
-
-    // ========== INITIALISATION ==========
-    renderEquipes();
-    renderAnnonces('nous'); renderAnnonces('eux');
-    updateTotals();
-    updateGlobalDisplay();
-
-// ========== SERVICE WORKER ==========
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/Belote-Calculator/service-worker.js')
-            .then(reg => console.log('SW enregistre:', reg.scope))
-            .catch(err => console.log('SW erreur:', err));
-    });
-}
+    })();
 </script>
+</body>
 </html>
