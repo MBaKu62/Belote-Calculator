@@ -49,7 +49,7 @@
         .announce-item select { background: #0f172a; border: 1px solid #4b5563; color: #fbbf24; padding: 6px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
         .announce-item .points { color: #fcd34d; font-weight: bold; min-width: 50px; text-align: center; }
         .btn-remove { background: #b91c1c; border: none; color: white; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-left: auto; }
-        .team-total { text-align: center; font-size: 1.8rem; font-weight: 800; background: #0f172a; color: #fbbf24; border-radius: 12px; padding: 8px; margin-top: 16px; border: 1px solid #374151; }
+        .team-total { text-align: center; font-size: 1.8rem; font-weight: 800; background: #0f172a; color: #fbbf24; border-radius: 12px; padding: 8px; margin-top: 16px; border: 1pxsolid #374151; }
         .note { font-size: 0.8rem; color: #6b7280; text-align: center; margin-top: 4px; }
         .manche-section { background: #1f2937; border-radius: 16px; padding: 18px; margin-top: 20px; border: 1px solid #374151; }
         .manche-section h3 { font-size: 1.3rem; color: #6ee7b7; margin-bottom: 12px; text-align: center; }
@@ -75,59 +75,6 @@
         .partie-item .date { color: #fbbf24; font-weight: bold; }
         .manche-detail { font-size: 0.9rem; margin-left: 16px; color: #9ca3af; }
         .close-btn { float: right; background: #b91c1c; border: none; color: white; padding: 6px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; }
-
-  /* ── BELOTE BACKGROUND ── */
-  #cards-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-  }
-
-  .bg-card {
-    position: absolute;
-    width: 52px;
-    height: 76px;
-    border-radius: 6px;
-    background: #f5f0e8;
-    border: 1px solid rgba(0,0,0,0.10);
-    box-shadow: 2px 3px 12px rgba(0,0,0,0.45);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 4px 5px;
-    font-family: Georgia, serif;
-    font-weight: bold;
-    font-size: 13px;
-    opacity: 0;
-    animation: floatCard linear infinite;
-    pointer-events: none;
-  }
-  .bg-card.red { color: #c0392b; }
-  .bg-card.black { color: #1a1a1a; }
-  .bg-card .suit { font-size: 11px; }
-  .bg-card .bot { transform: rotate(180deg); align-self: flex-end; }
-  .bg-card .mid {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20px;
-    opacity: 0.20;
-  }
-
-  @keyframes floatCard {
-    0%   { transform: translateY(110vh) rotate(var(--r0)); opacity: 0; }
-    8%   { opacity: 0.55; }
-    88%  { opacity: 0.40; }
-    100% { transform: translateY(-15vh) rotate(var(--r1)); opacity: 0; }
-  }
-
-  /* Tout le contenu existant passe au-dessus */
-  body > *:not(#cards-bg) {
-    position: relative;
-    z-index: 1;
-  }
     </style>
 </head>
 <body>
@@ -528,51 +475,5 @@ if ('serviceWorker' in navigator) {
             .catch(err => console.log('SW erreur:', err));
     });
 }
-<div id="cards-bg"></div>
-
-  (function() {
-    const CARDS = [
-      {r:'A', s:'♠', red:false}, {r:'K', s:'♥', red:true},
-      {r:'Q', s:'♦', red:true},  {r:'J', s:'♣', red:false},
-      {r:'10',s:'♠', red:false}, {r:'9', s:'♥', red:true},
-      {r:'8', s:'♦', red:true},  {r:'7', s:'♣', red:false},
-      {r:'A', s:'♥', red:true},  {r:'K', s:'♠', red:false},
-      {r:'Q', s:'♣', red:false}, {r:'J', s:'♦', red:true},
-    ];
-
-    const bg = document.getElementById('cards-bg');
-
-    function makeCard() {
-      const d = CARDS[Math.floor(Math.random() * CARDS.length)];
-      const c = document.createElement('div');
-      c.className = 'bg-card ' + (d.red ? 'red' : 'black');
-      c.style.cssText = `
-        left: ${Math.random() * 92}%;
-        --r0: ${(Math.random()*50-25).toFixed(1)}deg;
-        --r1: ${(Math.random()*50-25).toFixed(1)}deg;
-        animation-duration: ${7 + Math.random() * 9}s;
-        animation-delay: ${(Math.random() * -18).toFixed(2)}s;
-      `;
-      c.innerHTML = `
-        <div><span>${d.r}</span><br><span class="suit">${d.s}</span></div>
-        <div class="mid">${d.s}</div>
-        <div class="bot"><span>${d.r}</span><br><span class="suit">${d.s}</span></div>
-      `;
-      bg.appendChild(c);
-
-      // Recycle la carte à chaque boucle
-      c.addEventListener('animationiteration', () => {
-        const nd = CARDS[Math.floor(Math.random() * CARDS.length)];
-        c.className = 'bg-card ' + (nd.red ? 'red' : 'black');
-        c.style.left = Math.random() * 92 + '%';
-        c.style.animationDuration = (7 + Math.random() * 9) + 's';
-        c.querySelector('div:first-child').innerHTML = `<span>${nd.r}</span><br><span class="suit">${nd.s}</span>`;
-        c.querySelector('.mid').textContent = nd.s;
-        c.querySelector('.bot').innerHTML = `<span>${nd.r}</span><br><span class="suit">${nd.s}</span>`;
-      });
-    }
-
-    for (let i = 0; i < 14; i++) makeCard();
-  })();
 </script>
 </html>
